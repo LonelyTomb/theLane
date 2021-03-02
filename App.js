@@ -10,6 +10,7 @@ import React from 'react';
 import * as eva from '@eva-design/eva';
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import {default as theme} from './theme.json';
+import {default as mapping} from './mapping.json';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
@@ -39,7 +40,10 @@ export default () => {
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
+      <ApplicationProvider
+        {...eva}
+        theme={{...eva.light, ...theme}}
+        customMapping={mapping}>
         <AppNavigator />
       </ApplicationProvider>
     </>
