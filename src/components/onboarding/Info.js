@@ -2,14 +2,15 @@ import React from 'react';
 import {
   Text,
   TopNavigation,
+  TopNavigationAction,
   Layout,
   StyleService,
+  Icon,
   useTheme,
 } from '@ui-kitten/components';
 import {SafeAreaView, TouchableOpacity} from 'react-native';
-import BottomNav from '../../components/onboarding/BottomNav';
 
-const Welcome = ({navigation, route}) => {
+const Info = ({callback}) => {
   const theme = useTheme();
   const styles = StyleService.create({
     safe: {
@@ -48,13 +49,19 @@ const Welcome = ({navigation, route}) => {
       width: '60%',
     },
   });
-
+  const BackIcon = (props) => (
+    <Icon {...props} name={'arrow-ios-back-outline'} pack={'eva'} />
+  );
+  const BackAction = () => (
+    <TopNavigationAction icon={BackIcon} onPress={callback} />
+  );
   return (
     <SafeAreaView style={styles.safe}>
       <TopNavigation
         headerTransparent={true}
         style={styles.header}
         headerStyle={styles.header}
+        accessoryLeft={BackAction}
         accessoryRight={() => {
           return (
             <TouchableOpacity>
@@ -67,25 +74,15 @@ const Welcome = ({navigation, route}) => {
       />
       <Layout style={styles.layout}>
         <Text style={styles.welcomeText} category={'p1'}>
-          Hello, this is your news app
-        </Text>
-        <Text
-          style={{...styles.welcomeText, ...styles.appName}}
-          category={'h1'}>
-          theLane
+          Learn about new features in the application
         </Text>
         <Text style={styles.welcomeSubText} category={'s1'}>
-          Don't forget to update a lot of cool things ahead
+          The application you are using develops all the time. Follow change is
+          easy - we will inform you
         </Text>
-        <BottomNav
-          route={route}
-          callback={() => {
-            navigation.navigate('Info');
-          }}
-        />
       </Layout>
     </SafeAreaView>
   );
 };
 
-export default Welcome;
+export default Info;

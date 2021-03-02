@@ -1,13 +1,11 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import {Layout, Text, withStyles, Icon} from '@ui-kitten/components';
-import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 
-const routes = ['Welcome', 'Info', 'Login', 'Prefs'];
-const indicators = (currentRoute, eva) => {
-  console.log(currentRoute);
+const indicators = (route, eva) => {
+  const {routes, currentRoute} = route;
   const dots = [];
-  routes.forEach((route, i) => {
+  for (let i = 0; i < routes; i++) {
     dots.push(
       <Icon
         key={i}
@@ -15,7 +13,7 @@ const indicators = (currentRoute, eva) => {
         style={{
           ...eva.style.icon,
           color:
-            currentRoute.name === route
+            currentRoute === i
               ? eva.style.activeIcon.color
               : eva.style.icon.color,
         }}
@@ -23,7 +21,7 @@ const indicators = (currentRoute, eva) => {
         fill="#8F9BB3"
       />,
     );
-  });
+  }
   return dots;
 };
 

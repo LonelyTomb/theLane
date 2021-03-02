@@ -16,22 +16,16 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import {MaterialIconsPack} from './icons/material-icons';
 
-import Welcome from './src/screens/onboarding/Welcome';
-import Info from './src/screens/onboarding/Info';
+import OnBoarding from './src/screens/onboarding/OnBoarding';
 
 const {Navigator: SNavigator, Screen: SScreen} = createStackNavigator();
-
+// const {Navigator: TNavigator, Screen: TScreen} = createBottomTabNavigator();
 const onBoarding = () => {
   return (
-    <SNavigator headerMode={'none'} options={{gestureEnabled: true}}>
+    <SNavigator headerMode={false}>
       <SScreen
-        name={'Welcome'}
-        component={Welcome}
-        options={{gestureEnabled: true}}
-      />
-      <SScreen
-        name={'Info'}
-        component={Info}
+        name={'OnBoarding'}
+        component={OnBoarding}
         options={{gestureEnabled: true}}
       />
     </SNavigator>
