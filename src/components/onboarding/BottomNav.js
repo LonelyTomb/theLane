@@ -1,29 +1,41 @@
 import React from 'react';
 import {TouchableOpacity, StyleSheet} from 'react-native';
 import {Layout, Text, withStyles, Icon} from '@ui-kitten/components';
+import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 
-const indicators = (eva) => {
+const routes = ['Welcome', 'Info', 'Login', 'Prefs'];
+const indicators = (currentRoute, eva) => {
+  console.log(currentRoute);
   const dots = [];
-  for (let i = 0; i < 4; i++) {
+  routes.forEach((route, i) => {
     dots.push(
       <Icon
         key={i}
-        name={'radio-button-off'}
-        style={eva.style.icon}
+        name={'circle'}
+        style={{
+          ...eva.style.icon,
+          color:
+            currentRoute.name === route
+              ? eva.style.activeIcon.color
+              : eva.style.icon.color,
+        }}
+        pack={'material'}
         fill="#8F9BB3"
       />,
     );
-  }
+  });
   return dots;
 };
 
-const BottomNavComponent = ({eva}) => {
+const BottomNavComponent = ({route, callback, eva}) => {
   return (
     <>
       <Layout style={eva.style.wrapper}>
         <Layout style={eva.style.layout}>
-          <Layout style={eva.style.iconWrapper}>{indicators(eva)}</Layout>
-          <TouchableOpacity>
+          <Layout style={eva.style.iconWrapper}>
+            {indicators(route, eva)}
+          </Layout>
+          <TouchableOpacity onPress={callback}>
             <Text style={eva.style.nextButton}>Next</Text>
           </TouchableOpacity>
         </Layout>
@@ -39,6 +51,11 @@ const BottomNav = withStyles(BottomNavComponent, (theme) => ({
   icon: {
     width: 8,
     height: 8,
+    color: '#797A7B',
+    marginRight: 5,
+  },
+  activeIcon: {
+    color: theme['color-primary-400'],
   },
   iconWrapper: {
     flexDirection: 'row',
