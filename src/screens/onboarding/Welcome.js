@@ -3,14 +3,13 @@ import {
   Text,
   TopNavigation,
   Layout,
-  Button,
   StyleService,
   useTheme,
 } from '@ui-kitten/components';
-import {SafeAreaView, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView, TouchableOpacity} from 'react-native';
 import BottomNav from '../../components/onboarding/BottomNav';
 
-const Welcome = () => {
+const Welcome = ({navigation, route}) => {
   const theme = useTheme();
   const styles = StyleService.create({
     safe: {
@@ -37,15 +36,15 @@ const Welcome = () => {
     welcomeText: {
       color: theme['color-primary-400'],
       width: '80%',
-      fontSize: 20,
+      fontSize: 24,
     },
     appName: {
       fontWeight: 'bold',
-      fontSize: 30,
+      fontSize: 36,
     },
     welcomeSubText: {
       color: 'grey',
-      fontSize: 16,
+      fontSize: 14,
       width: '60%',
     },
   });
@@ -78,7 +77,12 @@ const Welcome = () => {
         <Text style={styles.welcomeSubText} category={'s1'}>
           Don't forget to update a lot of cool things ahead
         </Text>
-        <BottomNav />
+        <BottomNav
+          route={route}
+          callback={() => {
+            navigation.navigate('Info');
+          }}
+        />
       </Layout>
     </SafeAreaView>
   );
