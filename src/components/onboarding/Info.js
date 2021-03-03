@@ -25,7 +25,7 @@ const Info = ({callback}) => {
     },
     layout: {
       flex: 1,
-      justifyContent: 'center',
+      paddingTop: '20%',
       paddingHorizontal: 15,
       paddingBottom: '20%',
     },
@@ -35,8 +35,9 @@ const Info = ({callback}) => {
       color: '#C6C6C6',
     },
     welcomeText: {
-      color: theme['color-primary-400'],
-      width: '80%',
+      color: theme['color-primary-600'],
+      width: '75%',
+      fontWeight: '600',
       fontSize: 24,
     },
     appName: {
@@ -47,6 +48,24 @@ const Info = ({callback}) => {
       color: 'grey',
       fontSize: 14,
       width: '60%',
+    },
+    logoWrapper: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      marginBottom: '20%',
+    },
+    logo: {
+      backgroundColor: '#FFFFFF',
+      width: 45,
+      height: 45,
+      borderRadius: 5,
+      elevation: 4,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    logoIcon: {
+      width: 25,
+      height: 25,
     },
   });
   const BackIcon = (props) => (
@@ -73,6 +92,16 @@ const Info = ({callback}) => {
         }}
       />
       <Layout style={styles.layout}>
+        <Layout style={styles.logoWrapper}>
+          <Layout style={styles.logo}>
+            <Icon
+              style={styles.logoIcon}
+              name={'droplet'}
+              pack={'eva'}
+              fill={theme['color-primary-400']}
+            />
+          </Layout>
+        </Layout>
         <Text style={styles.welcomeText} category={'p1'}>
           Learn about new features in the application
         </Text>
