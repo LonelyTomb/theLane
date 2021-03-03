@@ -33,8 +33,8 @@ const Welcome = () => {
       color: '#C6C6C6',
     },
     welcomeText: {
-      color: theme['color-primary-400'],
-      width: '80%',
+      color: theme['color-primary-600'],
+      width: '75%',
       fontSize: 24,
     },
     appName: {
