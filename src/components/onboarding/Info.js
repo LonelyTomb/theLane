@@ -58,7 +58,7 @@ const Info = ({callback}) => {
       backgroundColor: '#FFFFFF',
       width: 45,
       height: 45,
-      borderRadius: 5,
+      borderRadius: 10,
       elevation: 4,
       alignItems: 'center',
       justifyContent: 'center',
