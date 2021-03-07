@@ -23,8 +23,8 @@ const authRestLink = new ApolloLink((operation, forward) => {
 
 const restLink = new RestLink({
   uri: API_URL,
-  responseTransformer: async (response) =>
-    response.json().then(({data}) => data),
+  // responseTransformer: async (response) =>
+  //   response.json().then(({data}) => data),
 });
 
 const httpLink = createHttpLink({
