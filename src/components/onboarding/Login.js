@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   TopNavigation,
@@ -12,17 +12,37 @@ import {
   useTheme,
 } from '@ui-kitten/components';
 import {SafeAreaView, TouchableOpacity} from 'react-native';
+import {useMutation, useQuery} from '@apollo/client';
+import {UserQueries} from '../../apollo/queries';
+import {UserMutations} from '../../apollo/mutations';
+import {useApolloClient} from '@apollo/client';
 
 const Login = ({callback}) => {
   const theme = useTheme();
-  const [form, setForm] = useState({email: '', password: ''});
+  const client = useApolloClient();
+  const [form, setForm] = useState({
+    email: 'test12@gmail.com',
+    password: 'password',
+  });
   const [secureText, setSecureText] = useState(true);
+
+  const [login, {loading, error, data}] = useMutation(
+    UserMutations.loginUser(),
+  );
+
   const handleChange = (name, value) => {
     setForm({...form, [name]: value});
   };
   const toggleSecureText = () => {
     setSecureText(!secureText);
   };
+
+  useEffect(() => {
+    console.log(data);
+    if (error) {
+      console.log(error);
+    }
+  }, [data, error, loading]);
 
   const toggleSecureTextIcon = (props) => (
     <TouchableOpacity onPress={toggleSecureText}>
@@ -155,7 +175,18 @@ const Login = ({callback}) => {
             secureTextEntry={secureText}
             accessoryRight={toggleSecureTextIcon}
           />
-          <Button>Sign Up</Button>
+          <Button
+            onPress={async () => {
+              try {
+                await login({
+                  variables: {email: form.email, password: form.password},
+                });
+              } catch (e) {
+                console.log(error);
+              }
+            }}>
+            Sign Up
+          </Button>
         </Layout>
         <Layout style={styles.dividerLayout}>
           <Divider style={styles.divider} />

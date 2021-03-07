@@ -7,6 +7,8 @@ import BottomNav from '../../components/onboarding/BottomNav';
 
 const OnBoarding = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const shouldLoadComponent = (index) => index === selectedIndex;
+
   const screens = [
     {Component: Welcome, callback: null},
     {
@@ -22,8 +24,10 @@ const OnBoarding = () => {
       },
     },
   ];
+
   return (
     <ViewPager
+      shouldLoadComponent={shouldLoadComponent}
       selectedIndex={selectedIndex}
       onSelect={(index) => setSelectedIndex(index)}
       style={styles.pager}>
