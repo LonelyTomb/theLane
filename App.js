@@ -18,6 +18,7 @@ import {MaterialIconsPack} from './icons/material-icons';
 import {Provider} from 'react-redux';
 import configureAppStore from './src/redux/store';
 import OnBoarding from './src/screens/onboarding/OnBoarding';
+import Login from './src/screens/Login';
 
 const {Navigator: SNavigator, Screen: SScreen} = createStackNavigator();
 // const {Navigator: TNavigator, Screen: TScreen} = createBottomTabNavigator();
@@ -37,6 +38,7 @@ const AppNavigator = () => {
     <NavigationContainer>
       <SNavigator headerMode={'none'}>
         <SScreen name={'onBoarding'} component={onBoarding} />
+        <SScreen name={'Login'} component={Login} />
       </SNavigator>
     </NavigationContainer>
   );
