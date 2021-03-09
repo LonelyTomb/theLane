@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   Text,
   TopNavigation,
@@ -12,11 +13,30 @@ import {
   useTheme,
 } from '@ui-kitten/components';
 import {SafeAreaView, TouchableOpacity} from 'react-native';
+import {AuthThunks} from '../../redux/thunks';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import {token_chars} from '@env';
 
 const Login = ({callback}) => {
   const theme = useTheme();
-  const [form, setForm] = useState({email: '', password: ''});
+  const dispatch = useDispatch();
+  const {authLogin} = AuthThunks;
+  const auth = useSelector((state) => state.auth);
+  const [form, setForm] = useState({
+    email: 'test12@gmail.com',
+    password: 'password',
+  });
   const [secureText, setSecureText] = useState(true);
+
+  console.log(auth);
+
+  useEffect(() => {
+    const getToken = async () => {
+      const token = await EncryptedStorage.getItem(token_chars);
+      console.log(token);
+    };
+    getToken().then();
+  }, []);
   const handleChange = (name, value) => {
     setForm({...form, [name]: value});
   };
@@ -155,7 +175,17 @@ const Login = ({callback}) => {
             secureTextEntry={secureText}
             accessoryRight={toggleSecureTextIcon}
           />
-          <Button>Sign Up</Button>
+          <Button
+            onPress={async () => {
+              try {
+                const tee = await dispatch(authLogin(form));
+                // console.log('test', tee);
+              } catch (e) {
+                console.log('err', e);
+              }
+            }}>
+            Sign Up
+          </Button>
         </Layout>
         <Layout style={styles.dividerLayout}>
           <Divider style={styles.divider} />
