@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react';
-import * as Keychain from 'react-keychain';
+import * as Keychain from 'react-native-keychain';
 
 export default (props) => {
   const {
