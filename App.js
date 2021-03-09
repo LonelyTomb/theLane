@@ -15,7 +15,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import {MaterialIconsPack} from './icons/material-icons';
-
+import {Provider} from 'react-redux';
+import configureAppStore from './src/redux/store';
 import OnBoarding from './src/screens/onboarding/OnBoarding';
 
 const {Navigator: SNavigator, Screen: SScreen} = createStackNavigator();
@@ -42,15 +43,18 @@ const AppNavigator = () => {
 };
 
 export default () => {
+  const store = configureAppStore({});
   return (
     <>
       <IconRegistry icons={[MaterialIconsPack, EvaIconsPack]} />
-      <ApplicationProvider
-        {...eva}
-        theme={{...eva.light, ...theme}}
-        customMapping={mapping}>
-        <AppNavigator />
-      </ApplicationProvider>
+      <Provider store={store}>
+        <ApplicationProvider
+          {...eva}
+          theme={{...eva.light, ...theme}}
+          customMapping={mapping}>
+          <AppNavigator />
+        </ApplicationProvider>
+      </Provider>
     </>
   );
 };
