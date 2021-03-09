@@ -8,7 +8,7 @@ const loadingState = (state, payload) => {
 
 export const authSlice = createSlice({
   name: 'auth',
-  initialState: {loading: false, error: null},
+  initialState: {loading: false, error: null, isLoggedIn: false},
   reducers: {
     loadingState,
   },
@@ -19,6 +19,7 @@ export const authSlice = createSlice({
     [authLogin.fulfilled]: (state, action) => {
       loadingState(state, false);
       const {token} = action.payload;
+      state.isLoggedIn = true;
       saveToken(token);
     },
     [authLogin.rejected]: (state, action) => {
@@ -31,6 +32,7 @@ export const authSlice = createSlice({
     [authSignUp.fulfilled]: (state, action) => {
       loadingState(state, false);
       const {token} = action.payload;
+      state.isLoggedIn = true;
       saveToken(token);
     },
     [authSignUp.rejected]: (state, action) => {
