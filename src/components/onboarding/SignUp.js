@@ -17,7 +17,7 @@ import {AuthThunks} from '../../redux/thunks';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import {token_chars} from '@env';
 
-const Login = ({callback}) => {
+const SignUp = ({callback, skipCallback}) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const {authLogin} = AuthThunks;
@@ -141,7 +141,7 @@ const Login = ({callback}) => {
         accessoryLeft={BackAction}
         accessoryRight={() => {
           return (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={skipCallback}>
               <Text style={styles.skipButton} category={'p1'}>
                 Skip
               </Text>
@@ -216,4 +216,4 @@ const Login = ({callback}) => {
   );
 };
 
-export default Login;
+export default SignUp;

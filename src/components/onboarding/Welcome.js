@@ -8,7 +8,7 @@ import {
 } from '@ui-kitten/components';
 import {SafeAreaView, TouchableOpacity} from 'react-native';
 
-const Welcome = () => {
+const Welcome = ({skipCallback}) => {
   const theme = useTheme();
   const styles = StyleService.create({
     safe: {
@@ -56,7 +56,7 @@ const Welcome = () => {
         headerStyle={styles.header}
         accessoryRight={() => {
           return (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={skipCallback}>
               <Text style={styles.skipButton} category={'p1'}>
                 Skip
               </Text>
