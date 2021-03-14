@@ -22,6 +22,15 @@ const saveToken = async (token) => {
     console.log(err);
   }
 };
-const AuthThunks = {authLogin, saveToken, authSignUp};
+
+const getToken = async (token) => {
+  try {
+    return await EncryptedStorage.getItem(token_chars);
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+const AuthThunks = {authLogin, saveToken, getToken, authSignUp};
 
 export default AuthThunks;
