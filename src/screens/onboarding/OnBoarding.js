@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {Layout, ViewPager, StyleService} from '@ui-kitten/components';
 import Welcome from './../../components/onboarding/Welcome';
 import Info from './../../components/onboarding/Info';
@@ -12,27 +12,36 @@ const OnBoarding = ({navigation}) => {
   const screens = [
     {
       Component: Welcome,
-      callback: null,
-      skipCallback: () => {
-        navigation.navigate('Login');
+      props: {
+        callback: null,
+        skipCallback: () => {
+          navigation.navigate('Login');
+        },
       },
     },
     {
       Component: Info,
-      callback: () => {
-        setSelectedIndex(0);
-      },
-      skipCallback: () => {
-        navigation.navigate('Login');
+      props: {
+        callback: () => {
+          setSelectedIndex(0);
+        },
+        skipCallback: () => {
+          navigation.navigate('Login');
+        },
       },
     },
     {
       Component: SignUp,
-      callback: () => {
-        setSelectedIndex(1);
-      },
-      skipCallback: () => {
-        navigation.navigate('Login');
+      props: {
+        callback: () => {
+          setSelectedIndex(1);
+        },
+        skipCallback: () => {
+          navigation.navigate('Login');
+        },
+        successCallback: () => {
+          navigation.navigate('Home');
+        },
       },
     },
   ];
@@ -43,9 +52,9 @@ const OnBoarding = ({navigation}) => {
       selectedIndex={selectedIndex}
       onSelect={(index) => setSelectedIndex(index)}
       style={styles.pager}>
-      {screens.map(({Component, callback, skipCallback}, i) => (
+      {screens.map(({Component, props}, i) => (
         <Layout level="2" style={styles.layout} key={i}>
-          <Component callback={callback} skipCallback={skipCallback} />
+          <Component {...props} />
           <BottomNav
             route={{currentRoute: i, routes: screens.length}}
             callback={() => {
