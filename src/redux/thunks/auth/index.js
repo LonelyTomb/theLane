@@ -3,15 +3,38 @@ import API from '../../../api';
 import {token_chars} from '@env';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
-const authLogin = createAsyncThunk('auth/login', async (payload, thunkAPI) => {
-  const response = await API.post('/signin', payload);
-  return response.data;
-});
+const authLogin = createAsyncThunk(
+  'auth/login',
+  async (payload, {rejectWithValue}) => {
+    try {
+      const response = await API.post('/signin', payload);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  },
+);
 const authSignUp = createAsyncThunk(
   'auth/signUp',
-  async (payload, thunkAPI) => {
-    const response = await API.post('/signup', payload);
-    return response.data;
+  async (payload, {rejectWithValue}) => {
+    try {
+      const response = await API.post('/signup', payload);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  },
+);
+
+const verifyAuth = createAsyncThunk(
+  'auth/verify',
+  async (payload, {rejectWithValue}) => {
+    try {
+      const response = await API.get('/');
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
   },
 );
 
@@ -23,7 +46,7 @@ const saveToken = async (token) => {
   }
 };
 
-const getToken = async (token) => {
+const getToken = async () => {
   try {
     return await EncryptedStorage.getItem(token_chars);
   } catch (err) {
@@ -31,6 +54,6 @@ const getToken = async (token) => {
     return null;
   }
 };
-const AuthThunks = {authLogin, saveToken, getToken, authSignUp};
+const AuthThunks = {authLogin, saveToken, getToken, authSignUp, verifyAuth};
 
 export default AuthThunks;
