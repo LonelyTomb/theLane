@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import * as eva from '@eva-design/eva';
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import {default as theme} from './theme.json';
@@ -17,12 +17,14 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import {MaterialIconsPack} from './icons/material-icons';
-import {Provider} from 'react-redux';
+import {Provider, useSelector, useDispatch} from 'react-redux';
 import configureAppStore from './src/redux/store';
 import OnBoarding from './src/screens/onboarding/OnBoarding';
 import Login from './src/screens/Login';
 import Home from './src/screens/home/Home';
 import Browse from './src/screens/home/Browse';
+import SplashScreen from 'react-native-splash-screen';
+import {AuthThunks} from './src/redux/thunks';
 
 const {Navigator: SNavigator, Screen: SScreen} = createStackNavigator();
 const {Navigator: TNavigator, Screen: TScreen} = createBottomTabNavigator();
@@ -49,12 +51,43 @@ const HomeTabs = () => {
 };
 
 const AppNavigator = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const dispatch = useDispatch();
+  const {verifyAuth} = AuthThunks;
+  const {isLoggedIn} = useSelector((state) => state.auth);
+  useEffect(() => {
+    const confirmUser = async () => {
+      await dispatch(verifyAuth());
+    };
+    confirmUser()
+      .then(() => {
+        setIsLoading(false);
+        setLoggedIn(isLoggedIn);
+      })
+      .catch(() => {
+        setLoggedIn(isLoggedIn);
+        setIsLoading(false);
+      });
+  }, [dispatch, verifyAuth, isLoggedIn]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      SplashScreen.hide();
+    }
+  }, [isLoading]);
   return (
     <NavigationContainer>
       <SNavigator headerMode={'none'}>
-        <SScreen name={'onBoarding'} component={onBoarding} />
-        <SScreen name={'Login'} component={Login} />
-        <SScreen name={'Home'} component={HomeTabs} />
+        {isLoggedIn ? (
+          <SScreen name={'Home'} component={HomeTabs} />
+        ) : (
+          <>
+            <SScreen name={'onBoarding'} component={onBoarding} />
+            <SScreen name={'Login'} component={Login} />
+          </>
+        )}
       </SNavigator>
     </NavigationContainer>
   );
