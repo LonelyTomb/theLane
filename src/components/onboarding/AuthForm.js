@@ -114,10 +114,9 @@ const AuthForm = ({callback, buttonTitle}) => {
         <Button
           onPress={async () => {
             try {
-              const tee = await dispatch(callback(form));
-              console.log('test', tee);
+              await dispatch(callback(form));
             } catch (e) {
-              console.log('err', e);
+              // console.log('err', e);
             }
           }}>
           {buttonTitle}
