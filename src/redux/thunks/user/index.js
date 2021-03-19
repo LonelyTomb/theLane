@@ -1,8 +1,8 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import API from '../../../api';
+import {UserAPI} from '../../../api';
 
 const getUser = createAsyncThunk('user/getUser', async (payload, thunkAPI) => {
-  const response = await API.get('/');
+  const response = await UserAPI.get('/');
   return response.data;
 });
 
