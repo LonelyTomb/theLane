@@ -25,7 +25,6 @@ export const authSlice = createSlice({
     [authLogin.rejected]: (state, action) => {
       loadingState(state, false);
       errorMessage(state, null);
-      state.error = action.error.message;
     },
     [authSignUp.pending]: (state) => {
       loadingState(state, true);
@@ -55,7 +54,6 @@ export const authSlice = createSlice({
     [verifyAuth.rejected]: (state, action) => {
       loadingState(state, false);
       errorMessage(state, null);
-      state.error = action.error.message;
       saveToken('');
       state.isLoggedIn = false;
     },
