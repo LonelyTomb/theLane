@@ -1,5 +1,5 @@
 import {combineReducers} from '@reduxjs/toolkit';
-import userReducer from './users';
+import userReducer from './../slices/user';
 import authReducer from './../slices/auth';
 
 const appReducers = combineReducers({
