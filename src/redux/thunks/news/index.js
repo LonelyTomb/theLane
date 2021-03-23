@@ -4,11 +4,10 @@ import qs from 'query-string';
 
 const topHeadlines = createAsyncThunk(
   'news/topHeadlines',
-  async (query, {rejectWithValue}) => {
+  async (payload, {rejectWithValue}) => {
     try {
-      const response = await NewsAPI.get(
-        `/top-headlines${query && `?q=${qs.stringify(query)}`}`,
-      );
+      const query = payload ? `?${qs.stringify(payload)}` : '';
+      const response = await NewsAPI.get(`/top-headlines${query}`);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
