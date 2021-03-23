@@ -6,9 +6,15 @@
  * @flow strict-local
  */
 import 'react-native-gesture-handler';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import * as eva from '@eva-design/eva';
-import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
+import {
+  ApplicationProvider,
+  IconRegistry,
+  Icon,
+  BottomNavigation,
+  BottomNavigationTab,
+} from '@ui-kitten/components';
 import {default as theme} from './theme.json';
 import {default as mapping} from './mapping.json';
 import {NavigationContainer} from '@react-navigation/native';
@@ -29,6 +35,34 @@ import isLoggedIn from './src/hooks/isLoggedIn';
 const {Navigator: SNavigator, Screen: SScreen} = createStackNavigator();
 const {Navigator: TNavigator, Screen: TScreen} = createBottomTabNavigator();
 
+const HomeIcon = (props) => {
+  return <Icon {...props} name={'home-outline'} pack={'eva'} />;
+};
+const BrowseIcon = (props) => {
+  return <Icon {...props} name={'book-open-outline'} pack={'eva'} />;
+};
+
+const BottomTabBar = ({navigation, state}) => {
+  return (
+    <BottomNavigation
+      appearance={'noIndicator'}
+      selectedIndex={state.index}
+      onSelect={(index) => navigation.navigate(state.routeNames[index])}>
+      <BottomNavigationTab title={'Home'} icon={HomeIcon} />
+      <BottomNavigationTab title={'Browse'} icon={BrowseIcon} />
+    </BottomNavigation>
+  );
+};
+
+const HomeTabs = () => {
+  return (
+    <TNavigator tabBar={(props) => <BottomTabBar {...props} />}>
+      <TScreen name={'Home'} component={Home} />
+      <TScreen name={'Browse'} component={Browse} />
+    </TNavigator>
+  );
+};
+
 const onBoarding = () => {
   return (
     <SNavigator headerMode={false}>
@@ -38,15 +72,6 @@ const onBoarding = () => {
         options={{gestureEnabled: true}}
       />
     </SNavigator>
-  );
-};
-
-const HomeTabs = () => {
-  return (
-    <TNavigator>
-      <TScreen name={'Home'} component={Home} />
-      <TScreen name={'Browse'} component={Browse} />
-    </TNavigator>
   );
 };
 
