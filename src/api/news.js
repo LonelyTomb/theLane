@@ -9,7 +9,7 @@ API.interceptors.request.use(
   async (configs) => {
     const config = configs;
     if (NEWS_API_KEY) {
-      config.headers.Authorization = `${NEWS_API_URL}`;
+      config.headers.Authorization = `${NEWS_API_KEY}`;
     }
 
     return config;
