@@ -6,7 +6,7 @@ const {errorMessage, loadingState} = Utils;
 
 export const newsSlice = createSlice({
   name: 'user',
-  initialState: {loading: false, headlines: {}},
+  initialState: {loading: false, headlines: {articles: []}},
   reducers: {},
   extraReducers: {
     [topHeadlines.pending]: (state) => {
@@ -16,7 +16,7 @@ export const newsSlice = createSlice({
     [topHeadlines.fulfilled]: (state, action) => {
       loadingState(state, false);
       errorMessage(state, null);
-      console.log(action.payload);
+      state.headlines = {...action.payload};
     },
     [topHeadlines.rejected]: (state, action) => {
       loadingState(state, false);
