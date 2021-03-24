@@ -1,6 +1,7 @@
 import React from 'react';
 import {Image} from 'react-native';
 import {Layout, Text, StyleService} from '@ui-kitten/components';
+import {DateTime} from 'luxon';
 
 const HeadlinesCard = ({article}) => {
   const styles = StyleService.create({
@@ -23,7 +24,14 @@ const HeadlinesCard = ({article}) => {
     title: {
       fontWeight: '600',
     },
-    content: {},
+    content: {
+      marginBottom: 5,
+    },
+    footer: {
+      text: {
+        color: '#c6c6c6',
+      },
+    },
   });
   return (
     <Layout style={styles.layout}>
@@ -35,6 +43,11 @@ const HeadlinesCard = ({article}) => {
         <Text style={styles.content} category={'p1'}>
           {article.description}
         </Text>
+        <Layout style={styles.footer}>
+          <Text style={styles.footer.text}>
+            {DateTime.fromISO(article.publishedAt).toFormat('DDD')}
+          </Text>
+        </Layout>
       </Layout>
     </Layout>
   );
