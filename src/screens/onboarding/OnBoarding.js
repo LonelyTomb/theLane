@@ -39,9 +39,6 @@ const OnBoarding = ({navigation}) => {
         skipCallback: () => {
           navigation.navigate('Login');
         },
-        successCallback: () => {
-          navigation.navigate('Home');
-        },
       },
     },
   ];

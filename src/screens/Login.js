@@ -1,20 +1,12 @@
-import React, {useEffect} from 'react';
-import {useSelector} from 'react-redux';
+import React from 'react';
 import {Text, Layout, StyleService, useTheme} from '@ui-kitten/components';
 import {SafeAreaView} from 'react-native';
 import {AuthThunks} from '../redux/thunks';
 import AuthForm from '../components/onboarding/AuthForm';
 
-const Login = ({navigation}) => {
+const Login = () => {
   const theme = useTheme();
   const {authLogin} = AuthThunks;
-  const {isLoggedIn} = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigation.navigate('Home');
-    }
-  }, [isLoggedIn, navigation]);
 
   const styles = StyleService.create({
     safe: {

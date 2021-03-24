@@ -1,5 +1,4 @@
-import React, {useEffect} from 'react';
-import {useSelector} from 'react-redux';
+import React from 'react';
 import {
   Text,
   TopNavigation,
@@ -13,16 +12,9 @@ import {SafeAreaView, TouchableOpacity} from 'react-native';
 import {AuthThunks} from '../../redux/thunks';
 import AuthForm from './AuthForm';
 
-const SignUp = ({callback, skipCallback, successCallback}) => {
+const SignUp = ({callback, skipCallback}) => {
   const theme = useTheme();
   const {authSignUp} = AuthThunks;
-  const {isLoggedIn, error} = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      successCallback();
-    }
-  }, [error, isLoggedIn, successCallback]);
 
   const BackIcon = (props) => (
     <Icon {...props} name={'arrow-ios-back-outline'} pack={'eva'} />
