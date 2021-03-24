@@ -1,6 +1,6 @@
 import React from 'react';
-import {Image} from 'react-native';
-import {Layout, Text, StyleService} from '@ui-kitten/components';
+import {Image, TouchableOpacity} from 'react-native';
+import {Layout, Text, StyleService, Icon} from '@ui-kitten/components';
 import {DateTime} from 'luxon';
 
 const HeadlinesCard = ({article}) => {
@@ -28,8 +28,15 @@ const HeadlinesCard = ({article}) => {
       marginBottom: 5,
     },
     footer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
       text: {
         color: '#c6c6c6',
+      },
+      icon: {
+        width: 25,
+        height: 25,
       },
     },
   });
@@ -47,6 +54,13 @@ const HeadlinesCard = ({article}) => {
           <Text style={styles.footer.text}>
             {DateTime.fromISO(article.publishedAt).toFormat('DDD')}
           </Text>
+          <TouchableOpacity>
+            <Icon
+              name={'bookmark-outline'}
+              pack={'material'}
+              style={styles.footer.icon}
+            />
+          </TouchableOpacity>
         </Layout>
       </Layout>
     </Layout>
