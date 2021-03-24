@@ -2,6 +2,7 @@ import React from 'react';
 import {Image, TouchableOpacity} from 'react-native';
 import {Layout, Text, StyleService, Icon} from '@ui-kitten/components';
 import {DateTime} from 'luxon';
+import OpenUrl from '../OpenUrl';
 
 const HeadlinesCard = ({article}) => {
   const styles = StyleService.create({
@@ -41,29 +42,31 @@ const HeadlinesCard = ({article}) => {
     },
   });
   return (
-    <Layout style={styles.layout}>
-      <Image style={styles.image} source={{uri: article.urlToImage}} />
-      <Layout style={styles.container}>
-        <Text style={styles.title} category={'h5'}>
-          {article.title}
-        </Text>
-        <Text style={styles.content} category={'p1'}>
-          {article.description}
-        </Text>
-        <Layout style={styles.footer}>
-          <Text style={styles.footer.text}>
-            {DateTime.fromISO(article.publishedAt).toFormat('DDD')}
+    <OpenUrl url={article.url}>
+      <Layout style={styles.layout}>
+        <Image style={styles.image} source={{uri: article.urlToImage}} />
+        <Layout style={styles.container}>
+          <Text style={styles.title} category={'h5'}>
+            {article.title}
           </Text>
-          <TouchableOpacity>
-            <Icon
-              name={'bookmark-outline'}
-              pack={'material'}
-              style={styles.footer.icon}
-            />
-          </TouchableOpacity>
+          <Text style={styles.content} category={'p1'}>
+            {article.description}
+          </Text>
+          <Layout style={styles.footer}>
+            <Text style={styles.footer.text}>
+              {DateTime.fromISO(article.publishedAt).toFormat('DDD')}
+            </Text>
+            <TouchableOpacity>
+              <Icon
+                name={'bookmark-outline'}
+                pack={'material'}
+                style={styles.footer.icon}
+              />
+            </TouchableOpacity>
+          </Layout>
         </Layout>
       </Layout>
-    </Layout>
+    </OpenUrl>
   );
 };
 
