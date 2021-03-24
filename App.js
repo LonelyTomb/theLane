@@ -36,7 +36,7 @@ const {Navigator: SNavigator, Screen: SScreen} = createStackNavigator();
 const {Navigator: TNavigator, Screen: TScreen} = createBottomTabNavigator();
 
 const HomeIcon = (props) => {
-  return <Icon {...props} name={'home-outline'} pack={'eva'} />;
+  return <Icon {...props} name={'home'} pack={'material'} />;
 };
 const BrowseIcon = (props) => {
   return <Icon {...props} name={'book-open-outline'} pack={'eva'} />;
