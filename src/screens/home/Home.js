@@ -49,6 +49,10 @@ const Home = () => {
     },
     category: {
       marginRight: 10,
+      categoryText: {
+        textTransform: 'capitalize',
+        color: '#FFFFFF',
+      },
     },
   });
 
@@ -71,10 +75,11 @@ const Home = () => {
       <Button
         style={styles.category}
         appearance={'filled'}
+        status={query.category === item ? 'success' : 'primary'}
         onPress={() => {
           selectCategory(item);
         }}>
-        <Text>{item}</Text>
+        <Text style={styles.category.categoryText}>{item}</Text>
       </Button>
     );
   };
