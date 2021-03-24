@@ -4,9 +4,25 @@ import {NewsThunks, Utils} from '../../thunks';
 const {topHeadlines} = NewsThunks;
 const {errorMessage, loadingState} = Utils;
 
+export const categories = [
+  'business',
+  'entertainment',
+  'general',
+  'health',
+  'science',
+  'sports',
+  'technology',
+];
+
 export const newsSlice = createSlice({
   name: 'user',
-  initialState: {loading: false, headlines: {articles: []}},
+  initialState: {
+    loading: false,
+    headlines: {
+      articles: [],
+    },
+    categories,
+  },
   reducers: {},
   extraReducers: {
     [topHeadlines.pending]: (state) => {
