@@ -4,18 +4,16 @@ import {Layout, StyleService, Text, List, Button} from '@ui-kitten/components';
 import LoadingOverlay from '../../components/LoadingOverlay';
 import {NewsThunks} from '../../redux/thunks';
 import TopBar from '../../components/home/TopBar';
-import {SafeAreaView, TouchableOpacity, ScrollView} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import HeadlinesCard from '../../components/cards/HeadlinesCard';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const newsList = React.createRef();
+  const newsList = useRef(null);
 
   const [query, setQuery] = useState({country: 'us'});
   const {topHeadlines} = NewsThunks;
-  const {loading, headlines, error, categories} = useSelector(
-    (state) => state.news,
-  );
+  const {loading, headlines, categories} = useSelector((state) => state.news);
 
   useEffect(() => {
     const getTopHeadlines = async () => {
@@ -23,15 +21,6 @@ const Home = () => {
     };
     getTopHeadlines().then();
   }, [topHeadlines, dispatch, query]);
-
-  useEffect(() => {
-    const scrollToTop = () => {
-      if (!loading && headlines.articles.length > 0 && newsList.current) {
-        newsList.current.scrollToIndex({animated: true, index: 0});
-      }
-    };
-    setTimeout(scrollToTop, 1000);
-  }, [newsList, headlines, loading]);
 
   const styles = StyleService.create({
     safe: {
@@ -73,11 +62,11 @@ const Home = () => {
     setQuery({...payload});
   };
 
-  const renderItem = ({item, index}) => {
+  const renderItem = ({item}) => {
     return <HeadlinesCard article={item} />;
   };
 
-  const renderCategories = ({item, index}) => {
+  const renderCategories = ({item}) => {
     return (
       <Button
         style={styles.category}
@@ -113,6 +102,9 @@ const Home = () => {
           {/*<ScrollView nestedScrollEnabled={true}>*/}
           <Layout style={styles.listContainerWrapper}>
             <List
+              onContentSizeChange={() => {
+                newsList.current.scrollToIndex({animated: false, index: 0});
+              }}
               ref={newsList}
               style={styles.listContainer}
               renderItem={renderItem}
