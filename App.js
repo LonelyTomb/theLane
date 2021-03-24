@@ -80,7 +80,9 @@ const AppNavigator = () => {
 
   useEffect(() => {
     if (!loading) {
-      SplashScreen.hide();
+      setTimeout(() => {
+        SplashScreen.hide();
+      }, 1000);
     }
   }, [token, loading]);
   return (
