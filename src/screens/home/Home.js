@@ -108,7 +108,9 @@ const Home = () => {
           <Layout style={styles.listContainerWrapper}>
             <List
               onContentSizeChange={() => {
-                newsList.current.scrollToIndex({animated: false, index: 0});
+                if (headlines.articles.length > 0) {
+                  newsList.current.scrollToIndex({animated: false, index: 0});
+                }
               }}
               ref={newsList}
               style={styles.listContainer}
