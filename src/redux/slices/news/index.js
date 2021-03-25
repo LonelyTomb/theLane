@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NewsThunks, Utils} from '../../thunks';
 
-const {topHeadlines} = NewsThunks;
+const {topHeadlines, everything} = NewsThunks;
 const {errorMessage, loadingState} = Utils;
 
 export const categories = [
@@ -21,6 +21,9 @@ export const newsSlice = createSlice({
     headlines: {
       articles: [],
     },
+    everything: {
+      articles: [],
+    },
     categories,
   },
   reducers: {},
@@ -35,6 +38,19 @@ export const newsSlice = createSlice({
       state.headlines = {...action.payload};
     },
     [topHeadlines.rejected]: (state, action) => {
+      loadingState(state, false);
+      errorMessage(state, null);
+    },
+    [everything.pending]: (state) => {
+      loadingState(state, true);
+      errorMessage(state, null);
+    },
+    [everything.fulfilled]: (state, action) => {
+      loadingState(state, false);
+      errorMessage(state, null);
+      state.everything = {...action.payload};
+    },
+    [everything.rejected]: (state, action) => {
       loadingState(state, false);
       errorMessage(state, null);
     },
