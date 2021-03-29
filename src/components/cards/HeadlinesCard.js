@@ -12,6 +12,7 @@ const HeadlinesCard = ({article}) => {
       overflow: 'hidden',
       borderColor: '#c6c6c6',
       marginBottom: 20,
+      elevation: 3,
     },
     container: {
       padding: 10,
