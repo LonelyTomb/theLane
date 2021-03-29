@@ -13,7 +13,11 @@ const Home = () => {
 
   const [query, setQuery] = useState({country: 'us'});
   const {topHeadlines} = NewsThunks;
-  const {loading, headlines, categories} = useSelector((state) => state.news);
+  const {
+    loading,
+    headlines: {articles},
+    categories,
+  } = useSelector((state) => state.news);
 
   useEffect(() => {
     const getTopHeadlines = async () => {
@@ -108,14 +112,14 @@ const Home = () => {
           <Layout style={styles.listContainerWrapper}>
             <List
               onContentSizeChange={() => {
-                if (headlines.articles.length > 0) {
+                if (articles.length > 0) {
                   newsList.current.scrollToIndex({animated: false, index: 0});
                 }
               }}
               ref={newsList}
               style={styles.listContainer}
               renderItem={renderItem}
-              data={headlines.articles}
+              data={articles}
             />
           </Layout>
           {/*</ScrollView>*/}
