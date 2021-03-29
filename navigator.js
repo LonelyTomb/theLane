@@ -20,6 +20,8 @@ import OnBoarding from './src/screens/onboarding/OnBoarding';
 import Login from './src/screens/Login';
 import Home from './src/screens/home/Home';
 import Browse from './src/screens/home/Browse';
+import Settings from './src/screens/Settings';
+
 import SplashScreen from 'react-native-splash-screen';
 import isLoggedIn from './src/hooks/isLoggedIn';
 
@@ -76,15 +78,35 @@ const AppNavigator = () => {
       }, 1000);
     }
   }, [token, loading]);
+
   return (
     <NavigationContainer>
-      <SNavigator headerMode={'none'}>
+      <SNavigator>
         {token ? (
-          <SScreen name={'Home'} component={HomeTabs} />
+          <>
+            <SScreen
+              name={'Home'}
+              component={HomeTabs}
+              options={{headerShown: false}}
+            />
+            <SScreen
+              name={'Settings'}
+              component={Settings}
+              options={{mode: 'modal'}}
+            />
+          </>
         ) : (
           <>
-            <SScreen name={'onBoarding'} component={onBoarding} />
-            <SScreen name={'Login'} component={Login} />
+            <SScreen
+              name={'onBoarding'}
+              component={onBoarding}
+              options={{headerShown: false}}
+            />
+            <SScreen
+              name={'Login'}
+              component={Login}
+              options={{headerShown: false}}
+            />
           </>
         )}
       </SNavigator>
