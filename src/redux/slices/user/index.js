@@ -6,7 +6,7 @@ const {errorMessage, loadingState} = Utils;
 
 export const userSlice = createSlice({
   name: 'user',
-  initialState: {loading: false, user: {}, error: null},
+  initialState: {loading: false, user: null, error: null},
   reducers: {},
   extraReducers: {
     [getUser.pending]: (state) => {
@@ -16,8 +16,7 @@ export const userSlice = createSlice({
     [getUser.fulfilled]: (state, action) => {
       loadingState(state, false);
       errorMessage(state, null);
-      const {user} = action.payload;
-      state.user = {...user};
+      state.user = action.payload.user;
     },
     [getUser.rejected]: (state, action) => {
       loadingState(state, false);
