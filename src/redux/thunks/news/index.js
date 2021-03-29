@@ -15,7 +15,7 @@ const topHeadlines = createAsyncThunk(
   },
 );
 
-const everything = createAsyncThunk(
+const loadEverything = createAsyncThunk(
   'news/everything',
   async (payload, {rejectWithValue}) => {
     try {
@@ -28,6 +28,19 @@ const everything = createAsyncThunk(
   },
 );
 
-const NewsThunks = {topHeadlines, everything};
+const loadSources = createAsyncThunk(
+  'news/sources',
+  async (payload, {rejectWithValue}) => {
+    try {
+      const query = payload ? `?${qs.stringify(payload)}` : '';
+      const response = await NewsAPI.get(`/sources${query}`);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  },
+);
+
+const NewsThunks = {topHeadlines, loadEverything, loadSources};
 
 export default NewsThunks;

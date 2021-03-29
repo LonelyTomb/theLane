@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NewsThunks, Utils} from '../../thunks';
 
-const {topHeadlines, everything} = NewsThunks;
+const {topHeadlines, loadEverything, loadSources} = NewsThunks;
 const {errorMessage, loadingState} = Utils;
 
 export const categories = [
@@ -25,6 +25,7 @@ export const newsSlice = createSlice({
       articles: [],
     },
     categories,
+    sources: [],
   },
   reducers: {},
   extraReducers: {
@@ -39,20 +40,33 @@ export const newsSlice = createSlice({
     },
     [topHeadlines.rejected]: (state, action) => {
       loadingState(state, false);
-      errorMessage(state, null);
+      errorMessage(state, action.payload);
     },
-    [everything.pending]: (state) => {
+    [loadEverything.pending]: (state) => {
       loadingState(state, true);
       errorMessage(state, null);
     },
-    [everything.fulfilled]: (state, action) => {
+    [loadEverything.fulfilled]: (state, action) => {
       loadingState(state, false);
       errorMessage(state, null);
       state.everything = {...action.payload};
     },
-    [everything.rejected]: (state, action) => {
+    [loadEverything.rejected]: (state, action) => {
+      loadingState(state, false);
+      errorMessage(state, action.payload);
+    },
+    [loadSources.pending]: (state) => {
+      loadingState(state, true);
+      errorMessage(state, null);
+    },
+    [loadSources.fulfilled]: (state, action) => {
       loadingState(state, false);
       errorMessage(state, null);
+      state.sources = [...action.payload.sources];
+    },
+    [loadSources.rejected]: (state, action) => {
+      loadingState(state, false);
+      errorMessage(state, action.payload);
     },
   },
 });
