@@ -44,7 +44,11 @@ const HeadlinesCard = ({article}) => {
   return (
     <OpenUrl url={article.url}>
       <Layout style={styles.layout}>
-        <Image style={styles.image} source={{uri: article.urlToImage}} />
+        {article.urlToImage && (
+          <>
+            <Image style={styles.image} source={{uri: article.urlToImage}} />
+          </>
+        )}
         <Layout style={styles.container}>
           <Text style={styles.title} category={'h5'}>
             {article.title}
