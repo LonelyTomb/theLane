@@ -1,14 +1,12 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {StyleSheet} from 'react-native';
-import {Layout, Modal, Card, Spinner} from '@ui-kitten/components';
+import {Layout, Modal, Spinner} from '@ui-kitten/components';
 
-const LoadingOverlay = (status) => {
+const LoadingOverlay = (status = true) => {
   return (
     <Layout>
       <Modal visible={status} backdropStyle={styles.backDrop}>
-        {/*<Card>*/}
         <Spinner status="primary" size="giant" />
-        {/*</Card>*/}
       </Modal>
     </Layout>
   );
