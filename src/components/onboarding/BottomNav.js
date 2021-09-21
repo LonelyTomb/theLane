@@ -26,6 +26,7 @@ const indicators = (route, eva) => {
 };
 
 const BottomNavComponent = ({route, callback, eva}) => {
+  const {routes, currentRoute} = route;
   return (
     <>
       <Layout style={eva.style.wrapper}>
@@ -33,9 +34,11 @@ const BottomNavComponent = ({route, callback, eva}) => {
           <Layout style={eva.style.iconWrapper}>
             {indicators(route, eva)}
           </Layout>
-          <TouchableOpacity onPress={callback}>
-            <Text style={eva.style.nextButton}>Next</Text>
-          </TouchableOpacity>
+          {routes !== currentRoute + 1 && (
+            <TouchableOpacity onPress={callback}>
+              <Text style={eva.style.nextButton}>Next</Text>
+            </TouchableOpacity>
+          )}
         </Layout>
       </Layout>
     </>

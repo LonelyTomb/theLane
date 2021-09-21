@@ -2,14 +2,27 @@ import React from 'react';
 import {
   Text,
   TopNavigation,
+  TopNavigationAction,
   Layout,
   StyleService,
+  Icon,
   useTheme,
 } from '@ui-kitten/components';
 import {SafeAreaView, TouchableOpacity} from 'react-native';
+import {AuthThunks} from '../../redux/thunks';
+import AuthForm from './AuthForm';
 
-const Welcome = ({skipCallback}) => {
+const SignUp = ({callback, skipCallback}) => {
   const theme = useTheme();
+  const {authSignUp} = AuthThunks;
+
+  const BackIcon = (props) => (
+    <Icon {...props} name={'arrow-ios-back-outline'} pack={'eva'} />
+  );
+  const BackAction = () => (
+    <TopNavigationAction icon={BackIcon} onPress={callback} />
+  );
+
   const styles = StyleService.create({
     safe: {
       flex: 1,
@@ -23,7 +36,7 @@ const Welcome = ({skipCallback}) => {
     },
     layout: {
       flex: 1,
-      justifyContent: 'center',
+      paddingTop: '20%',
       paddingHorizontal: 15,
       paddingBottom: '20%',
     },
@@ -35,16 +48,14 @@ const Welcome = ({skipCallback}) => {
     welcomeText: {
       color: theme['color-primary-600'],
       width: '75%',
+      fontWeight: '600',
       fontSize: 24,
-    },
-    appName: {
-      fontWeight: 'bold',
-      fontSize: 36,
     },
     welcomeSubText: {
       color: 'grey',
       fontSize: 14,
       width: '60%',
+      marginBottom: '10%',
     },
   });
 
@@ -54,6 +65,7 @@ const Welcome = ({skipCallback}) => {
         headerTransparent={true}
         style={styles.header}
         headerStyle={styles.header}
+        accessoryLeft={BackAction}
         accessoryRight={() => {
           return (
             <TouchableOpacity onPress={skipCallback}>
@@ -66,19 +78,15 @@ const Welcome = ({skipCallback}) => {
       />
       <Layout style={styles.layout}>
         <Text style={styles.welcomeText} category={'p1'}>
-          Hello, this is your news app
-        </Text>
-        <Text
-          style={{...styles.welcomeText, ...styles.appName}}
-          category={'h1'}>
-          theLane
+          Reading on theLane is comfortable if you have an account
         </Text>
         <Text style={styles.welcomeSubText} category={'s1'}>
-          Don't forget to update a lot of cool things ahead
+          Synchronize your bookmarks, history across all devices
         </Text>
+        <AuthForm buttonTitle={'Sign Up'} callback={authSignUp} />
       </Layout>
     </SafeAreaView>
   );
 };
 
-export default Welcome;
+export default SignUp;
